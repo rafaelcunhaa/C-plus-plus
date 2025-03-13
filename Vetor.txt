@@ -1,0 +1,215 @@
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include <unistd.h>
+
+using namespace std;
+
+// FINALIZADO
+int alg1(int *vetor, int tamanho, int *maior_valor){
+  if(tamanho <= 0){
+    return maior_valor[0];
+  }
+  else{
+    if(vetor[tamanho-1] > maior_valor[0]){
+      maior_valor[0] = vetor[tamanho-1];
+    }
+    alg1(vetor, tamanho-1, maior_valor);
+  }
+  return maior_valor[0];
+}
+
+// FINALIZADO
+bool alg2(string palavra, int primeira_letra, int ultima_letra){
+  if(palavra[primeira_letra]!=palavra[ultima_letra]){
+    return false;
+  }
+  else{
+    alg2(palavra, primeira_letra+1, ultima_letra-1);
+    return true;
+  }
+}
+
+// FINALIZADO 
+string alg3(string palavra, int tamanhoPalavra) {
+    if (tamanhoPalavra == 0) {
+        return "";
+    } else {
+        return palavra[tamanhoPalavra - 1] + alg3(palavra, tamanhoPalavra - 1);
+    }
+}
+
+// FINALIZADO
+string alg4(string elemento1, string elemento2, int subconjuntos){
+    if (subconjuntos == 0) {   
+        return "";
+    } else {
+        string subconjunto = "";
+        if (subconjuntos == 4){
+          subconjunto += "{ }";
+        } else if(subconjuntos == 3){
+          subconjunto += "{" + elemento2 + "}";
+        } else if (subconjuntos == 2) {
+          subconjunto += "{" + elemento1 + "}";
+        } else if (subconjuntos == 1) {
+          subconjunto = "{" + elemento1 + elemento2 + "}";
+        }
+        return subconjunto + "\n" + alg4(elemento1, elemento2, subconjuntos - 1);
+    }
+}
+
+// FINALIZADO
+void alg5(int numero){
+  if(numero == 1){
+    cout << numero;
+    return;
+  }
+  else{
+    cout << numero << " ";
+    if(numero % 2 == 0){
+      alg5(numero/2);
+    }
+    else{
+      alg5(numero*3+1);
+    }
+  }
+}
+
+// REVISAR OPÇÕES 2 E 5
+bool menu(){
+  
+  int opcao;
+
+  cout << "\nEscolha um algoritmo para ser iniciado:"<<endl;
+  cout << "[1] Encontrar o maior numero de um vetor\n[2] Verificar se uma palavra eh palindroma\n[3] Imprimir uma palavra invertida\n[4] Encontrar as partes de um conjunto\n[5] Inserir um numero na sequencia de Collatz\n[0] Sair"<<endl;
+  cout << "Selecionado: ";
+  cin >> opcao;
+
+  if(opcao == 1){ // ALGORITMO 1
+
+    cin.ignore();
+    
+    int tamanho_alg1;
+    cout<<"Digite o tamanho do vetor: ";
+    cin>>tamanho_alg1;
+
+    int *vetor = new int[tamanho_alg1];
+    int *maior_valor = new int[1];
+
+    for(int i=0; i < tamanho_alg1; i++){
+      cout<<"Digite o valor da posição "<<i<<" do vetor: ";
+      cin>>vetor[i];
+    }
+
+    maior_valor[0] = vetor[0];
+
+    cout<< "Maior valor: "<<alg1(vetor, tamanho_alg1, maior_valor)<<endl;
+
+    sleep(2);
+    system("clear||cls");
+    return true;
+  }
+  else if(opcao == 2){ // ALGORITMO 2
+
+    cin.ignore();
+    
+    string palavra_alg2;
+  
+    cout << "Digite uma palavra para ser verificada: ";
+    cin >> palavra_alg2;
+
+    int primeira_letra = 0;
+    int ultima_letra = palavra_alg2.size()-1;
+  
+    if(alg2(palavra_alg2, primeira_letra, ultima_letra)==true){
+      cout<<"PALINDROMO";
+    }
+    else{
+      cout<<"NÃO É PALINDROMO";
+    }
+
+    sleep(2);
+    system("clear||cls");
+    return true;
+  }
+  else if(opcao == 3){ // ALGORITMO 3
+
+    cin.ignore();
+    
+    string palavra;
+    cout << "Digite uma palavra: ";
+    getline(cin, palavra);
+    
+    int tamanhoPalavra = palavra.size();
+    string palavraInvertida = alg3(palavra, tamanhoPalavra);
+    
+    cout << "Palavra invertida: " << palavraInvertida << endl;
+
+    sleep(2);
+    system("clear||cls");
+    return true;
+  }
+  else if(opcao == 4){ // ALGORITMO 4
+  
+    cin.ignore();
+
+    string elemento1_alg4;
+    string elemento2_alg4;
+    int subconjuntos = 4;
+
+    cout << "Determine os elementos do conjunto: \nElemento 1: ";
+    cin >> elemento1_alg4;
+    cout << "Elemento 2: ";
+    cin >> elemento2_alg4;
+
+    string conjunto = alg4(elemento1_alg4, elemento2_alg4, subconjuntos);
+    cout << conjunto;
+
+    sleep(2);
+    system("clear||cls");
+    return true;
+  }
+  else if(opcao == 5){ // ALGORITMO 5
+
+    cin.ignore();
+    
+    int numero_alg5;
+
+    cout<<"Digite um numero para ser colocado na serie de Collatz: ";
+    cin>>numero_alg5;
+
+    alg5(numero_alg5); 
+
+    sleep(2);
+    system("clear||cls");
+    return true;
+  }
+  else if(opcao == 0){ // SAIR
+    sleep(2);
+    system("clear||cls");
+    return false;
+  }
+  else{
+    cout << "\nValor invalido!"<<endl;
+    sleep(2);
+    system("clear||cls");
+    return true;
+  }
+}
+
+// FINALIZADO
+int main() {
+
+  cout << "\nSEGUNDA PARTE TRABALHO T2"<<endl;
+  cout << "Disciplina: Algoritmos e Programacao II"<<endl;
+  cout << "Professor: Jhonatan Alves"<<endl;
+  cout << "Alunos:\n\tJoao Pedro Tonatto Fraga\n\tRafael da Cunha\n\tVinicius Henrique Budag Coelho\n";
+
+  bool repetir = menu();
+
+  if(repetir==true){
+    while(repetir==true){
+      repetir = menu();
+    }
+  }
+}

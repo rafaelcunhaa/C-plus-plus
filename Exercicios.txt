@@ -1,0 +1,160 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Exercício 1, finalizado.
+string parentesis(string n, int a, int f, int i){
+
+  
+  string aberto = "(";
+  string fechado = ")";
+  
+  if(i > n.length()){
+    if(a == f){
+      return "Parênteses balanceados!";
+    } else {
+      return "Parênteses desbalanceados...";
+    }
+  }
+
+  if(n[i] == aberto[0]){
+    return parentesis(n, a+1, f, i+1);
+  } else if(n[i] == fechado[0]){
+    return parentesis(n, a, f+1, i+1);
+  } else {
+    return parentesis(n, a, f, i+1);
+  }
+};
+
+// Exercício 2, finalizado. 
+int tribonacci(int n) {
+
+  if (n <= 2)
+    return 0;
+  if (n == 3 || n == 4){
+    return 1;
+  }else{
+    return tribonacci(n-1)+tribonacci(n - 2) +tribonacci(n - 3);
+}
+}
+
+// Exercício 3, finalizado.
+void ordenar(int vetorDaEsquerda[], int vetorDaDireita[], int vetorCompleto[], int tamanhoEsquerda, int tamanhoDireita){
+
+// Imaginem que a primeira parte do vetor de numeros já foi dividida ao limite, ex: 53, 25, 47, 66, 14, 32, 95, 85 -> 53, 25, 47, 66 -> 53, 25 -> 53 & 25, 47 && 66.
+  
+// Percebe-se que deixei de lado a segunda metade do vetor, logo mais fará sentido.
+  
+// O vetorDaEsquerda representa o 53, e o vetorDaDireita o 25, e o vetorCompleto, a união deles no caso [53, 25]
+  
+// O vetorCompleto nada mais é do que o vetor numeros que passei lá na main, só que vazio, por enquanto.
+  
+// Usando esse mesmo exemplo, o código funciona dessa maneira:
+// Vetor completo = [  ,  ]
+  
+// Se o vetorDaEsquerda[0] (53) for menor que o vetorDaDireita[0] (25) , ele coloca ele na primeira posição do vetorCompleto e o vetorDaDireita na segunda posicao [53, 25].
+  
+// Já que é do MENOR pro MAIOR, o caso acima não se aplica, portanto o código cai no ELSE, que faz exatamente o contrário, e joga o 25 pra primeira posição, e o 53 para a segunda.
+  
+// O mesmo caso se aplica para o 47 e 66.
+  
+// Quando esses 2 vetores de 2 numeros estiverem completos, o código começa a desempilhar da stack, logo, vetorDaEsquerda agora é [25, 53] e vetorDaDireita é [47, 66], e a lógica segue a mesma, ele desempilha até chegar no último caso que analisa a divisão inicial dos vetores, no caso vetorDaEsquerda=[53, 25, 47, 66] e vetorDaDireita=[14, 32, 95, 85].
+  
+// Que ao final da comparacao entre esses 2 vetores, alocam os elementos em ordem crescente no vetorCompleto.
+int i=0, j=0, k =0;
+  while(i < tamanhoEsquerda && j < tamanhoDireita){
+    if(vetorDaEsquerda[i] < vetorDaDireita[j]){
+      vetorCompleto[k] = vetorDaEsquerda[i];
+      i++;
+      k++;
+    } else {
+      vetorCompleto[k] = vetorDaDireita[j];
+      j++;
+      k++;
+    };
+  }
+  while(i < tamanhoEsquerda){
+    vetorCompleto[k] = vetorDaEsquerda[i];
+    i++;
+    k++;
+  }
+  while(j < tamanhoDireita){
+    vetorCompleto[k] = vetorDaDireita[j];
+    j++;
+    k++;
+  }
+}
+
+void mergesort(int vetorDeNumeros[], int tamanho){
+  int meio = tamanho/2;
+  int vetorEsquerdo[meio];
+  int vetorDireito[tamanho - meio];
+
+  // CASO BASE, começa a desempilhar quando o vetor possui apenas 1 elemento, no caso do exemplo lá de cima, vetorDaEsquerda só possui um elemento=[53] e vetorDaDireita=[25].
+  if(tamanho <= 1){ 
+    return;
+  }
+
+  // Varre o vetor, colocando a primeira metade do vetorDeNumeros no vetorEsquerdo e o restante no vetorDireito.
+  int j=0;
+  for(int i = 0; i < tamanho; i++){ 
+    if(i < meio){
+      vetorEsquerdo[i] = vetorDeNumeros[i];
+    } else { 
+      vetorDireito[j] = vetorDeNumeros[i];
+      j++;
+    }
+  }
+  mergesort(vetorEsquerdo, meio);
+  mergesort(vetorDireito, tamanho-meio);
+  ordenar(vetorEsquerdo, vetorDireito, vetorDeNumeros, meio, tamanho-meio);
+}
+
+void menu(){
+  int escolha = 0;
+  bool sair = false;
+  while(sair == false){
+    cout << "\n:~~~Digite o número do exercício que você quer executar~~~:\n\n[1] VALIDAÇÃO DE PARÊNTESES\n[2] TRIBONACCI\n[3] MERGESORT\n\n[0] Sair" << endl;
+    cin >> escolha;
+    if(escolha == 1){
+      //Exercício 1.
+      int numFechado = 0;
+      int numAberto = 0;
+      int index = 0;
+      string expressao = "(6)+(2)(-7/2";
+      cout <<"\nEXPRESSÃO: " << expressao << endl;
+      cout << parentesis(expressao, numAberto, numFechado, index) << endl;
+    } else if(escolha == 2){
+      //Exercício 2.
+      int n;
+      cout << "\nDigite um número: " << endl;
+      cin >> n;
+      cout << "\nO " << n << "º termo da sequência de Tribonacci é: " << tribonacci(n) << endl;;
+    } else if(escolha == 3){
+      //Exercício 3.
+      int numeros[] = {53, 25, 47, 66, 14, 32, 95, 85, 15, 16, 19, 11};
+      int tamanho = sizeof(numeros) / sizeof(int);
+      cout << "\nVetor original: ";
+      for(int i=0; i<tamanho;i++){
+        cout<< numeros[i] << " ";
+      }
+
+      mergesort(numeros, tamanho);
+
+      cout<< "\nVetor ordenado: ";
+      for(int i=0; i<tamanho;i++){
+        cout<< numeros[i] << " ";
+      }
+      cout<<endl;
+    } else if(escolha == 0){
+      sair = true;
+    }
+  }
+}
+
+// Main
+int main() {
+  menu();
+}
+
