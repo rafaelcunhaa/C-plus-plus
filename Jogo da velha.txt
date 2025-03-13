@@ -1,0 +1,259 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int interface(char m[3][3])
+{
+ 
+    if(m[0][0]!='X' && m[0][0]!='O'){
+        m[0][0]=' ';
+    }
+    if(m[0][1]!='X' && m[0][1]!='O'){
+        m[0][1]=' ';
+    }
+    if(m[0][2]!='X' && m[0][2]!='O'){
+        m[0][2]=' ';
+    }
+    if(m[1][0]!='X' && m[1][0]!='O'){
+        m[1][0]=' ';
+    }
+    if(m[1][1]!='X' && m[1][1]!='O'){
+        m[1][1]=' ';
+    }
+    if(m[1][2]!='X' && m[1][2]!='O'){
+        m[1][2]=' ';
+    }
+    if(m[2][0]!='X' && m[2][0]!='O'){
+        m[2][0]=' ';
+    }
+    if(m[2][1]!='X' && m[2][1]!='O'){
+        m[2][1]=' ';
+    }
+    if(m[2][2]!='X' && m[2][2]!='O'){
+        m[2][2]=' ';
+    }
+   
+    printf("\n\n      0   1   2");
+    printf("\n\n 0  | %c | %c | %c |\n",m[0][0],m[0][1],m[0][2]);
+    printf("     --- --- ---");
+    printf("\n 1  | %c | %c | %c |\n",m[1][0],m[1][1],m[1][2]);
+    printf("     --- --- ---");
+    printf("\n 2  | %c | %c | %c |\n\n",m[2][0],m[2][1],m[2][2]);
+}
+
+int verificacao(char m[3][3],char p1[15],char p2[15])
+{
+  if(m[0][0]=='X' && m[0][1]=='X' && m[0][2]=='X'){
+    printf("O jogador %s venceu o jogo!",p1);
+    exit(0);
+  }
+  if(m[1][0]=='X' && m[1][1]=='X' && m[1][2]=='X'){
+    printf("O jogador %s venceu o jogo!",p1);
+    exit(0);
+  }
+  if(m[2][0]=='X' && m[2][1]=='X' && m[2][2]=='X'){
+    printf("O jogador %s venceu o jogo!",p1);
+    exit(0);
+  }
+  if(m[0][0]=='X' && m[1][0]=='X' && m[2][0]=='X'){
+    printf("O jogador %s venceu o jogo!",p1);
+    exit(0);
+  }
+  if(m[0][1]=='X' && m[1][1]=='X' && m[2][1]=='X'){
+    printf("O jogador %s venceu o jogo!",p1);
+    exit(0);
+  }
+  if(m[0][2]=='X' && m[1][2]=='X' && m[2][2]=='X'){
+    printf("O jogador %s venceu o jogo!",p1);
+    exit(0);
+  }
+  if(m[0][0]=='X' && m[1][1]=='X' && m[2][2]=='X'){
+    printf("O jogador %s venceu o jogo!",p1);
+    exit(0);
+  }
+  if(m[0][2]=='X' && m[1][1]=='X' && m[2][0]=='X'){
+    printf("O jogador %s venceu o jogo!",p1);
+    exit(0);
+  }
+
+
+  
+  if(m[0][0]=='O' && m[0][1]=='O' && m[0][2]=='O'){
+    printf("O jogador %s venceu o jogo!",p2);
+    exit(0);
+  }
+  if(m[1][0]=='O' && m[1][1]=='O' && m[1][2]=='O'){
+    printf("O jogador %s venceu o jogo!",p2);
+    exit(0);
+  }
+  if(m[2][0]=='O' && m[2][1]=='O' && m[2][2]=='O'){
+    printf("O jogador %s venceu o jogo!",p2);
+    exit(0);
+  }
+  if(m[0][0]=='O' && m[1][0]=='O' && m[2][0]=='O'){
+    printf("O jogador %s venceu o jogo!",p2);
+    exit(0);
+  }
+  if(m[0][1]=='O' && m[1][1]=='O' && m[2][1]=='O'){
+    printf("O jogador %s venceu o jogo!",p2);
+    exit(0);
+  }
+  if(m[0][2]=='O' && m[1][2]=='O' && m[2][2]=='O'){
+    printf("O jogador %s venceu o jogo!",p2);
+    exit(0);
+  }
+  if(m[0][0]=='O' && m[1][1]=='O' && m[2][2]=='O'){
+    printf("O jogador %s venceu o jogo!",p2);
+    exit(0);
+  }
+  if(m[0][2]=='O' && m[1][1]=='O' && m[2][0]=='O'){
+    printf("O jogador %s venceu o jogo!",p2);
+    exit(0);
+  }
+}
+
+int main()
+{
+    char m[3][3];
+    char p1[15]; // jogador 1
+    char p2[15]; // jogador 2
+    int repetir=0; // em caso de empate, o jogo poderá ser iniciado novamente.
+    int linha; // variável para armazenar a linha que os jogadores vão jogar
+    int coluna; // variável para armazenar a coluna que os jogadores vão jogar
+   
+    printf("\n Bem-vindo ao jogo da velha!\n\n Disciplina: Algoritmos e Programação I\n Professor: Jhonatan Alves\n Alunos: João Pedro Tonatto Fraga e Rafael Da Cunha");
+
+  do{
+   
+    printf("\n\n Para começar, insira o nome do jogador 1: ");
+    scanf("%s",p1);
+    system("clear");
+   
+    printf("\n Ótimo! Agora insira o nome do jogador 2: ");
+    scanf("%s",p2);
+    system("clear");
+   
+    interface(m);
+   
+    printf(" Vez de %s:",p1);
+    printf("\n-> Linha: ");
+    scanf("%d",&linha);
+    printf("-> Coluna: ");
+    scanf("%d",&coluna);
+   
+    m[linha][coluna]='X';
+    system("clear");
+  
+    interface(m);
+
+    printf(" Vez de %s:",p2);
+    printf("\n-> Linha: ");
+    scanf("%d",&linha);
+    printf("-> Coluna: ");
+    scanf("%d",&coluna);
+   
+    m[linha][coluna]='O';
+    system("clear");
+  
+    interface(m);
+
+    printf(" Vez de %s:",p1);
+    printf("\n-> Linha: ");
+    scanf("%d",&linha);
+    printf("-> Coluna: ");
+    scanf("%d",&coluna);
+   
+    m[linha][coluna]='X';
+    system("clear");
+
+    interface(m);
+
+    printf(" Vez de %s:",p2);
+    printf("\n-> Linha: ");
+    scanf("%d",&linha);
+    printf("-> Coluna: ");
+    scanf("%d",&coluna);
+   
+    m[linha][coluna]='O';
+    system("clear");
+    
+    interface(m);
+
+    printf(" Vez de %s:",p1);
+    printf("\n-> Linha: ");
+    scanf("%d",&linha);
+    printf("-> Coluna: ");
+    scanf("%d",&coluna);
+   
+    m[linha][coluna]='X';
+    system("clear");
+
+    interface(m);
+    verificacao(m,p1,p2);
+
+    printf(" Vez de %s:",p2);
+    printf("\n-> Linha: ");
+    scanf("%d",&linha);
+    printf("-> Coluna: ");
+    scanf("%d",&coluna);
+   
+    m[linha][coluna]='O';
+    system("clear");
+
+    interface(m);
+    verificacao(m,p1,p2);
+
+    printf(" Vez de %s:",p1);
+    printf("\n-> Linha: ");
+    scanf("%d",&linha);
+    printf("-> Coluna: ");
+    scanf("%d",&coluna);
+   
+    m[linha][coluna]='X';
+    system("clear");
+    
+    interface(m);
+    verificacao(m,p1,p2);
+
+    printf(" Vez de %s:",p2);
+    printf("\n-> Linha: ");
+    scanf("%d",&linha);
+    printf("-> Coluna: ");
+    scanf("%d",&coluna);
+   
+    m[linha][coluna]='O';
+    system("clear");
+
+    interface(m);
+    verificacao(m,p1,p2);
+
+    printf(" Vez de %s:",p1);
+    printf("\n-> Linha: ");
+    scanf("%d",&linha);
+    printf("-> Coluna: ");
+    scanf("%d",&coluna);
+   
+    m[linha][coluna]='X';
+    system("clear");
+
+    interface(m);
+    verificacao(m,p1,p2);
+
+    printf(" O jogo terminou em empate!");
+  
+    m[0][0]='/';
+    m[0][1]='/';
+    m[0][2]='/';
+    m[1][0]='/';
+    m[1][1]='/';
+    m[1][2]='/';
+    m[2][0]='/';
+    m[2][1]='/';
+    m[2][2]='/';
+
+    printf("\n\n Vocês gostariam de jogar novamente para haver um vencedor?(1)Sim (0)Não\n Selecionado: ");
+    scanf("%d",&repetir);
+    system("clear");
+  }
+
+    while(repetir==1);
+}
